@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 class Square extends React.Component {
+
+  logProps = () => {
+    console.log('lul u nerd, you clicked ' + this.props.value);
+  };
+
   render() {
     return (
-      <button className="square">
-        {this.props.number}
+      <button className="square" onClick={this.logProps}>
+        {this.props.value}
       </button>
     );
   }
@@ -14,7 +19,13 @@ class Square extends React.Component {
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square number={i} />;
+    let letters = ['a','b','c','d','e','f','g','h','i'];
+    if (i%2) {
+      return <Square value={i} />;
+    }
+    else {
+      return <Square value={letters[i]} />;
+    }
   }
 
   render() {
