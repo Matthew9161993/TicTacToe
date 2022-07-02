@@ -3,29 +3,39 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 class Square extends React.Component {
-
-  logProps = () => {
-    console.log('lul u nerd, you clicked ' + this.props.value);
-  };
-
+  
   render() {
     return (
-      <button className="square" onClick={this.logProps}>
+      <button className="square" onClick={() =>this.props.onClick()}>
         {this.props.value}
       </button>
     );
   }
+
 }
 
 class Board extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares : Array(9).fill(null)
+    };
+  }
+
+  handleClick(i) {
+    const sliced = this.state.squares.slice();
+      sliced[i] = 'X';
+      this.setState({squares: sliced});
+  }
+
   renderSquare(i) {
-    let letters = ['a','b','c','d','e','f','g','h','i'];
-    if (i%2) {
-      return <Square value={i} />;
-    }
-    else {
-      return <Square value={letters[i]} />;
-    }
+    return (
+      <Square 
+	value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    );
   }
 
   render() {
@@ -52,9 +62,11 @@ class Board extends React.Component {
       </div>
     );
   }
+
 }
 
 class Game extends React.Component {
+
   render() {
     return (
       <div className="game">
@@ -68,6 +80,7 @@ class Game extends React.Component {
       </div>
     );
   }
+
 }
 
 // ========================================
